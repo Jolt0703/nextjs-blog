@@ -9,12 +9,19 @@ import utilStyles from "../styles/utils.module.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { ReactNode } from "react";
 config.autoAddCss = false; /* eslint-disable import/first */
 
 const name = "Matsuzaki Jotaro";
 export const siteTitle = "Next.js Sample Website";
 
-const Layout = ({ children, home }) => {
+const Layout = ({
+  children,
+  home,
+}: {
+  children: ReactNode;
+  home?: boolean;
+}) => {
   return (
     <div className={styles.container}>
       <Head>

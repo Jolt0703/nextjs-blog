@@ -16,8 +16,17 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faPhone, faSms } from "@fortawesome/free-solid-svg-icons";
 import { getSortedPostsData } from "../lib/posts";
+import { GetStaticProps } from "next";
 
-const Home = ({ allPostsData }) => {
+const Home = ({
+  allPostsData,
+}: {
+  allPostsData: {
+    date: string;
+    title: string;
+    id: string;
+  }[];
+}) => {
   return (
     <Layout home>
       <Head>
@@ -25,8 +34,8 @@ const Home = ({ allPostsData }) => {
       </Head>
       <section className={utilStyles.headingMd}>
         <p>
-          Hi, I am a shitty web developer with crappy salary, just about to
-          ragequit my life &#x1f680;
+          Hi, I am a mediocre web developer just doing a bunch of tutorials
+          &#x1f680;
         </p>
         <p>
           You cannot contact me on{" "}
@@ -89,7 +98,7 @@ const Home = ({ allPostsData }) => {
 };
 
 // fetching data at build time
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const allPostsData = getSortedPostsData();
   return {
     props: {

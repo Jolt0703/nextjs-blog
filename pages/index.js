@@ -1,65 +1,122 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Link from "next/link";
+import Date from "../components/date";
+import utilStyles from "../styles/utils.module.css";
+import Layout, { siteTitle } from "../components/layout";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTwitter,
+  faYoutube,
+  faFacebook,
+  faDiscord,
+  faInstagram,
+  faTiktok,
+  faTwitch,
+  faSlack,
+} from "@fortawesome/free-brands-svg-icons";
+import { faPhone, faSms } from "@fortawesome/free-solid-svg-icons";
+import { getSortedPostsData } from "../lib/posts";
 
-export default function Home() {
+const Home = ({ allPostsData }) => {
   return (
-    <div className={styles.container}>
+    <Layout home>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>{siteTitle}</title>
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+      <section className={utilStyles.headingMd}>
+        <p>
+          Hi, I am a shitty web developer with crappy salary, just about to
+          ragequit my life &#x1f680;
         </p>
+        <p>
+          You cannot contact me on{" "}
+          <a href="https://en.wikipedia.org/wiki/Twitter" target="_blank">
+            <FontAwesomeIcon icon={faTwitter} style={{ color: "#666" }} />
+          </a>{" "}
+          <a href="https://en.wikipedia.org/wiki/Facebook" target="_blank">
+            <FontAwesomeIcon icon={faFacebook} style={{ color: "#666" }} />
+          </a>{" "}
+          <a href="https://en.wikipedia.org/wiki/Instagram" target="_blank">
+            <FontAwesomeIcon icon={faInstagram} style={{ color: "#666" }} />
+          </a>{" "}
+          <a href="https://en.wikipedia.org/wiki/Tiktok" target="_blank">
+            <FontAwesomeIcon icon={faTiktok} style={{ color: "#666" }} />
+          </a>{" "}
+          <a href="https://en.wikipedia.org/wiki/YouTube" target="_blank">
+            <FontAwesomeIcon icon={faYoutube} style={{ color: "#666" }} />
+          </a>{" "}
+          <a href="https://en.wikipedia.org/wiki/Telephone" target="_blank">
+            <FontAwesomeIcon icon={faPhone} style={{ color: "#666" }} />
+          </a>{" "}
+          <a href="https://en.wikipedia.org/wiki/SMS" target="_blank">
+            <FontAwesomeIcon icon={faSms} style={{ color: "#666" }} />
+          </a>{" "}
+          <a href="https://en.wikipedia.org/wiki/Slack" target="_blank">
+            <FontAwesomeIcon icon={faSlack} style={{ color: "#666" }} />
+          </a>{" "}
+          <a href="https://en.wikipedia.org/wiki/Discord" target="_blank">
+            <FontAwesomeIcon icon={faDiscord} style={{ color: "#666" }} />
+          </a>{" "}
+          <a href="https://en.wikipedia.org/wiki/Twitch" target="_blank">
+            <FontAwesomeIcon icon={faTwitch} style={{ color: "#666" }} />
+          </a>{" "}
+        </p>
+        <p>
+          (This is a sample website - you’ll be building a site like this on{" "}
+          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
+        </p>
+      </section>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+      {/* BlogPostsData */}
+      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <ul className={utilStyles.list}>
+          {allPostsData.map(({ id, date, title }) => (
+            <li className={utilStyles.listItem} key={id}>
+              <Link href={`/posts/${id}`}>
+                <a>{title}</a>
+              </Link>
+              <br />
+              <small className={utilStyles.lightText}>
+                <Date dateString={date} />
+              </small>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </Layout>
+  );
+};
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+// fetching data at build time
+export const getStaticProps = async () => {
+  const allPostsData = getSortedPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
+};
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+// // To use Server-side Rendering, you need to export getServerSideProps instead of getStaticProps from your page.
+// // Here’s the starter code for getServerSideProps.
+// // It’s not necessary for our blog example, so we won’t be implementing it.
+// export async function getServerSideProps(context) {
+//   return {
+//     props: {
+//       // props for your component
+//     }
+//   }
+// }
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+// // FOr client-side rendering, use useSWR hook
+// import useSWR from 'swr'
+// const fetcher = () => fetch('/api/user')
+// function Profile() {
+//   const { data, error } = useSWR('/api/user', fetcher)
+//   if (error) return <div>failed to load</div>
+//   if (!data) return <div>loading...</div>
+//   return <div>hello {data.name}!</div>
+// }
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
-}
+export default Home;

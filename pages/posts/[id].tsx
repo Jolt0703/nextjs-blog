@@ -1,9 +1,11 @@
-import Layout from "../../components/layout";
 import Head from "next/head";
 import { getAllPostIds, getPostData } from "../../lib/posts";
 import Date from "../../components/date";
 import utilStyles from "../../styles/utils.module.css";
+import styles from "./posts.module.css";
 import { GetStaticPaths, GetStaticProps } from "next";
+import "highlight.js/styles/rainbow.css";
+import Link from "next/link";
 
 const Post = ({
   postData,
@@ -15,18 +17,23 @@ const Post = ({
   };
 }) => {
   return (
-    <Layout>
+    <div className={styles.postContainer}>
       <Head>
         <title>{postData.title}</title>
       </Head>
-      <article>
-        <h1 className={utilStyles.headingXl}>{postData.title}</h1>
-        <div className={utilStyles.lightText}>
+      <article className={"prose lg:prose-xl"}>
+        <h1>{postData.title}</h1>
+        <div>
           <Date dateString={postData.date} />
         </div>
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
-    </Layout>
+      <div className={styles.backToHome}>
+        <Link href="/">
+          <a>← Back to home</a>
+        </Link>
+      </div>
+    </div>
   );
 };
 

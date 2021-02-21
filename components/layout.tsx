@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { ReactNode } from "react";
 import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 
@@ -9,7 +10,6 @@ import utilStyles from "../styles/utils.module.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from "@fortawesome/fontawesome-svg-core";
-import { ReactNode } from "react";
 config.autoAddCss = false; /* eslint-disable import/first */
 
 const name = "Matsuzaki Jotaro";
@@ -23,7 +23,7 @@ const Layout = ({
   home?: boolean;
 }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.mainContainer}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta

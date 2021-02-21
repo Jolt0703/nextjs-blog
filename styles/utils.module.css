@@ -1,5 +1,5 @@
 .heading2Xl {
-  font-size: 2.5rem;
+  font-size: 2.7rem;
   line-height: 1.2;
   font-weight: 800;
   letter-spacing: -0.05rem;
@@ -18,11 +18,17 @@
   font-size: 1.5rem;
   line-height: 1.4;
   margin: 1rem 0;
+  font-weight: 700;
 }
 
 .headingMd {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   line-height: 1.5;
+}
+
+.headingMd p {
+  margin-top: 18px;
+  margin-bottom: 18px;
 }
 
 .borderCircle {
